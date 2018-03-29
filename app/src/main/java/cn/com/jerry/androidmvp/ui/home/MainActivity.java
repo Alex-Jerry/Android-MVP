@@ -1,5 +1,6 @@
 package cn.com.jerry.androidmvp.ui.home;
 
+import android.Manifest;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,6 +46,29 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         mListView.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onLoadCompleteData(List<DeviceVO> body, boolean isMore) {
+        mLists.clear();
+        mLists.addAll(body);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFailer(String msg) {
+        //获取数据失败
+        Log.e(TAG, "onFailer: "+msg);
+    }
+
+    @Override
+    public void initResult(boolean isSuccess) {
+        Log.e(TAG, "initResult: "+isSuccess);
+    }
+
+    @Override
+    public void onPlayState(int status) {
+        Log.e(TAG, "onPlayState: "+status);
+    }
+
     @OnClick(R.id.load)
     void load(){
         if(!TextUtils.isEmpty(mToken)){
@@ -74,26 +98,4 @@ public class MainActivity extends BaseActivity implements MainContract.IMainView
         mPresenter.stopPlay("停止游戏了");
     }
 
-    @Override
-    public void onLoadCompleteData(List<DeviceVO> body, boolean isMore) {
-        mLists.clear();
-        mLists.addAll(body);
-        mAdapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onFailer(String msg) {
-        //获取数据失败
-        Log.e(TAG, "onFailer: "+msg);
-    }
-
-    @Override
-    public void initResult(boolean isSuccess) {
-        Log.e(TAG, "initResult: "+isSuccess);
-    }
-
-    @Override
-    public void onPlayState(int status) {
-        Log.e(TAG, "onPlayState: "+status);
-    }
 }
