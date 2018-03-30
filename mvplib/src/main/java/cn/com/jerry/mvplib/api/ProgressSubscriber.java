@@ -1,20 +1,21 @@
 package cn.com.jerry.mvplib.api;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
-public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCancelListener{
+public class ProgressSubscriber<T> implements ProgressCancelListener, Observer<T> {
     private static final String TAG = "ProgressSubscriber";
     private SubscriberOnNextListener<T> mListener;
     private Activity mContext;
     private ProgressDialogHandler mHandler;
+    //用于取消连接
+    private Disposable mDisposeable;
 
     public ProgressSubscriber(SubscriberOnNextListener<T> listener, Activity context){
         this.mListener = listener;
@@ -35,23 +36,6 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
         }
     }
 
-
-    /**
-     * 订阅开始时调用
-     * 显示ProgressDialog
-     */
-    @Override
-    public void onStart() {
-        super.onStart();
-        showProgressDialog();
-    }
-
-    @Override
-    public void onCompleted() {
-        dismissProgressDialog();
-        Log.i(TAG, "onCompleted: 获取数据完成！");
-    }
-
     @Override
     public void onError(Throwable e) {
         if (e instanceof SocketTimeoutException) {
@@ -65,6 +49,20 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
     }
 
     @Override
+    public void onComplete() {
+        dismissProgressDialog();
+        Log.i(TAG, "onCompleted: 获取数据完成！");
+    }
+
+    @Override
+    public void onSubscribe(Disposable d) {
+        //拿到Disposable对象可随时取消请求
+        mDisposeable = d;
+        //订阅开始时调用,显示ProgressDialog
+        showProgressDialog();
+    }
+
+    @Override
     public void onNext(T t) {
         if (mListener != null){
             mListener.onNext(t);
@@ -73,8 +71,8 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
 
     @Override
     public void onCancelProgress() {
-        if (!this.isUnsubscribed()){
-            this.unsubscribe();
+        if (mDisposeable != null && mDisposeable.isDisposed()){
+            mDisposeable.dispose();
         }
     }
 }

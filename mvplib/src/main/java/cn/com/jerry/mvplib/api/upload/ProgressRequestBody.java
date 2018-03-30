@@ -2,6 +2,9 @@ package cn.com.jerry.mvplib.api.upload;
 
 import java.io.IOException;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okio.Buffer;
@@ -9,9 +12,6 @@ import okio.BufferedSink;
 import okio.ForwardingSink;
 import okio.Okio;
 import okio.Sink;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * 自定义回调加载速度类RequestBody
@@ -80,9 +80,9 @@ public class ProgressRequestBody extends RequestBody {
                 if (totalBytesCount == 0) {
                     totalBytesCount = contentLength();
                 }
-                Observable.just(writtenBytesCount).observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Long>() {
+                Observable.just(writtenBytesCount).observeOn(AndroidSchedulers.mainThread()).subscribe(new Consumer<Long>() {
                     @Override
-                    public void call(Long aLong) {
+                    public void accept(Long aLong) throws Exception {
                         progressListener.onProgress(writtenBytesCount, totalBytesCount);
                     }
                 });

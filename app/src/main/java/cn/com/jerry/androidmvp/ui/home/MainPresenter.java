@@ -10,7 +10,8 @@ import cn.com.jerry.androidmvp.model.DeviceVO;
 import cn.com.jerry.androidmvp.utils.ToastUtil;
 import cn.com.jerry.mvplib.api.BaseResponse;
 import cn.com.jerry.mvplib.base.BasePresenter;
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  *
@@ -27,9 +28,9 @@ public class MainPresenter extends BasePresenter<MainContract.IMainView> impleme
             ToastUtil.show("token不能为空");
             return;
         }
-        JerryRetrofit.getInstance().MyDevices(map,new Subscriber<BaseResponse<List<DeviceVO>>>() {
+        JerryRetrofit.getInstance().MyDevices(map,new Observer<BaseResponse<List<DeviceVO>>>() {
             @Override
-            public void onCompleted() {
+            public void onComplete() {
                 ToastUtil.show("获取设备列表完成");
             }
 
@@ -37,6 +38,11 @@ public class MainPresenter extends BasePresenter<MainContract.IMainView> impleme
             public void onError(Throwable e) {
                 ToastUtil.show("获取设备列表出错");
                 mView.onFailer(e.getMessage());
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override

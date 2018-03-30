@@ -12,7 +12,6 @@ import cn.com.jerry.mvplib.api.BaseResponse;
 import cn.com.jerry.mvplib.api.ProgressSubscriber;
 import cn.com.jerry.mvplib.api.SubscriberOnNextListener;
 import cn.com.jerry.mvplib.base.model.LoadEveryLogicImpl;
-import rx.Subscriber;
 
 /**
  * Created by LiuLei on 2017/11/27.
@@ -42,12 +41,12 @@ public class LoginPresenter extends LoadEveryLogicImpl<UserVO> implements LoginC
 //        });
 
         JerryRetrofit.getInstance().getUserBean(map,
-                new ProgressSubscriber<BaseResponse<UserVO>>(new SubscriberOnNextListener<BaseResponse<UserVO>>() {
-            @Override
-            public void onNext(BaseResponse<UserVO> userVOBaseResponse) {
-                onLoadCompleteData(userVOBaseResponse);
-            }
-        }, context));
+                new ProgressSubscriber<>(new SubscriberOnNextListener<BaseResponse<UserVO>>() {
+                    @Override
+                    public void onNext(BaseResponse<UserVO> userVOBaseResponse) {
+                        onLoadCompleteData(userVOBaseResponse);
+                    }
+                }, context));
     }
 
 }

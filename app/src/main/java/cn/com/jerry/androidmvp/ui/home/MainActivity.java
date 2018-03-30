@@ -1,6 +1,5 @@
 package cn.com.jerry.androidmvp.ui.home;
 
-import android.Manifest;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,9 +14,7 @@ import butterknife.OnClick;
 import cn.com.jerry.androidmvp.R;
 import cn.com.jerry.androidmvp.model.DeviceVO;
 import cn.com.jerry.androidmvp.ui.upload.UploadActivity;
-import cn.com.jerry.androidmvp.utils.ToastUtil;
 import cn.com.jerry.mvplib.base.BaseActivity;
-import cn.com.jerry.mvplib.base.model.LoadListDataLogic;
 
 public class MainActivity extends BaseActivity implements MainContract.IMainView{
 

@@ -7,16 +7,16 @@ import cn.com.jerry.androidmvp.C;
 import cn.com.jerry.androidmvp.model.DeviceVO;
 import cn.com.jerry.androidmvp.model.UserVO;
 import cn.com.jerry.mvplib.api.BaseResponse;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class JerryRetrofit {
 
@@ -40,7 +40,7 @@ public class JerryRetrofit {
                 .client(mOkHttpClient)
                 .baseUrl(C.APP_HOST)
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         mApiService = mRetrofit.create(JerryApiService.class);
     }
@@ -59,35 +59,35 @@ public class JerryRetrofit {
     }
 
     //请求的原始函数
-    private <T> void request(Observable<T> observable, Subscriber<T> subscriber){
+    private <T> void request(Observable<T> observable, Observer<T> observer){
         observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
+                .subscribe(observer);
     }
 
     //验证手机号码   这里是我自己的接口
-    public void verfcationNum(Map<String,String> map,Subscriber<BaseResponse> subscriber){
-        request(mApiService.getVerfcationCodePostMap(map),subscriber);
+    public void verfcationNum(Map<String,String> map,Observer<BaseResponse> observer){
+        request(mApiService.getVerfcationCodePostMap(map),observer);
     }
 
     //获取用户个人信息   这里是我自己的接口
-    public void getUserBean(Map<String,String> map,Subscriber<BaseResponse<UserVO>> subscriber){
-        request(mApiService.getUser(map),subscriber);
+    public void getUserBean(Map<String,String> map,Observer<BaseResponse<UserVO>> observer){
+        request(mApiService.getUser(map),observer);
     }
 
     //获取我的设备列表  这里是我自己的接口
-    public void MyDevices(Map<String,String> map, Subscriber<BaseResponse<List<DeviceVO>>> subscriber){
-        request(mApiService.getDevices(map),subscriber);
+    public void MyDevices(Map<String,String> map, Observer<BaseResponse<List<DeviceVO>>> observer){
+        request(mApiService.getDevices(map),observer);
     }
 
     //上传头像  这里是我自己的接口
-    public void uploadImg(MultipartBody.Part part, Map<String, RequestBody>map, Subscriber<BaseResponse>subscriber){
+    public void uploadImg(MultipartBody.Part part, Map<String, RequestBody>map, Observer<BaseResponse>observer){
         mApiService.uploadImage(map,part)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
+                .subscribe(observer);
     }
 
 }

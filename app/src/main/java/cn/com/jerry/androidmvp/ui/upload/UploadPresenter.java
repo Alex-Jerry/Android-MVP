@@ -9,12 +9,14 @@ import cn.com.jerry.mvplib.api.BaseResponse;
 import cn.com.jerry.mvplib.api.upload.ProgressRequestBody;
 import cn.com.jerry.mvplib.api.upload.UploadProgressListener;
 import cn.com.jerry.mvplib.base.model.LoadEveryLogicImpl;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import rx.Subscriber;
 
 /**
+ *
  * Created by LiuLei on 2017/11/27.
  */
 
@@ -38,15 +40,21 @@ public class UploadPresenter extends LoadEveryLogicImpl implements UploadContrac
 //                        progressBar.setProgress((int) currentBytesCount);
                     }
                 }));
-        JerryRetrofit.getInstance().uploadImg(part,map, new Subscriber<BaseResponse>() {
-            @Override
-            public void onCompleted() {
-
-            }
+        JerryRetrofit.getInstance().uploadImg(part,map, new Observer<BaseResponse>() {
 
             @Override
             public void onError(Throwable e) {
                 ToastUtil.show("上传头像出错");
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+
+            @Override
+            public void onSubscribe(Disposable d) {
+
             }
 
             @Override
