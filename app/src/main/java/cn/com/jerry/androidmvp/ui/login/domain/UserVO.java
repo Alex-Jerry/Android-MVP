@@ -1,4 +1,4 @@
-package cn.com.jerry.androidmvp.model;
+package cn.com.jerry.androidmvp.ui.login.domain;
 
 
 

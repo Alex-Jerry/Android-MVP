@@ -10,20 +10,21 @@ import java.util.Map;
 import cn.com.jerry.mvplib.annotation.Implement;
 
 /**
+ *
  * Created by LiuLei on 2017/11/27.
  */
 public class BaseProxy {
     private static final BaseProxy m_instance = new BaseProxy();
+
+    private Map<Class, Object> mObjects;
 
     public static BaseProxy getInstance() {
         return m_instance;
     }
 
     private BaseProxy() {
-        m_objects = new HashMap<>();
+        mObjects = new HashMap<>();
     }
-
-    private Map<Class, Object> m_objects;
 
     public void init(Class... clss) {
         List<Class> list = new LinkedList<Class>();
@@ -33,7 +34,7 @@ public class BaseProxy {
                 for (Annotation ann : cls.getDeclaredAnnotations()) {
                     if (ann instanceof Implement) {
                         try {
-                            m_objects.put(cls, ((Implement) ann).value().newInstance());
+                            mObjects.put(cls, ((Implement) ann).value().newInstance());
                         } catch (InstantiationException e) {
                             e.printStackTrace();
                         } catch (IllegalAccessException e) {
@@ -46,11 +47,11 @@ public class BaseProxy {
     }
 
     public <T> T getProxy(Class cls) {
-        return (T) m_objects.get(cls);
+        return (T) mObjects.get(cls);
     }
 
     public <T> T bind(Class cls, BaseView o) {
-        Object ret = m_objects.get(cls);
+        Object ret = mObjects.get(cls);
         ((BasePresenter) ret).attachView(o);
         return (T) ret;
     }

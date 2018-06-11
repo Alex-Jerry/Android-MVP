@@ -4,10 +4,8 @@ import android.app.Activity;
 
 import java.util.HashMap;
 
-import cn.com.jerry.androidmvp.App;
 import cn.com.jerry.androidmvp.api.JerryRetrofit;
-import cn.com.jerry.androidmvp.model.UserVO;
-import cn.com.jerry.androidmvp.utils.ToastUtil;
+import cn.com.jerry.androidmvp.ui.login.domain.UserVO;
 import cn.com.jerry.mvplib.api.BaseResponse;
 import cn.com.jerry.mvplib.api.ProgressSubscriber;
 import cn.com.jerry.mvplib.api.SubscriberOnNextListener;

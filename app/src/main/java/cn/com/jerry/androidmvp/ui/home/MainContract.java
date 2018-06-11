@@ -4,7 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
-import cn.com.jerry.androidmvp.model.DeviceVO;
+import cn.com.jerry.androidmvp.ui.home.domain.DeviceVO;
 import cn.com.jerry.mvplib.annotation.Implement;
 import cn.com.jerry.mvplib.base.BaseView;
 

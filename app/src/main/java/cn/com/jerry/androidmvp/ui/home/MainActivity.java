@@ -8,13 +8,30 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.jerry.androidmvp.R;
-import cn.com.jerry.androidmvp.model.DeviceVO;
+import cn.com.jerry.androidmvp.ui.home.domain.DeviceVO;
+import cn.com.jerry.androidmvp.ui.login.domain.UserVO;
 import cn.com.jerry.androidmvp.ui.upload.UploadActivity;
 import cn.com.jerry.mvplib.base.BaseActivity;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.ResourceSubscriber;
 
 public class MainActivity extends BaseActivity implements MainContract.IMainView{
 

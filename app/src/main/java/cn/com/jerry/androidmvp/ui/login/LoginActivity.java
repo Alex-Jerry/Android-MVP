@@ -7,16 +7,10 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.com.jerry.androidmvp.R;
-import cn.com.jerry.androidmvp.api.JerryApiService;
-import cn.com.jerry.androidmvp.api.JerryRetrofit;
-import cn.com.jerry.androidmvp.model.NewsEntity;
-import cn.com.jerry.androidmvp.model.UserVO;
+import cn.com.jerry.androidmvp.ui.login.domain.UserVO;
 import cn.com.jerry.androidmvp.ui.home.MainActivity;
 import cn.com.jerry.mvplib.base.BaseActivity;
 import cn.com.jerry.mvplib.base.model.LoadEveryLogic;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends BaseActivity implements LoadEveryLogic.LoadEveryView<UserVO>{
 

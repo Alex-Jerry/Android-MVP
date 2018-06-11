@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import cn.com.jerry.androidmvp.api.JerryRetrofit;
-import cn.com.jerry.androidmvp.model.DeviceVO;
+import cn.com.jerry.androidmvp.ui.home.domain.DeviceVO;
 import cn.com.jerry.androidmvp.utils.ToastUtil;
 import cn.com.jerry.mvplib.api.BaseResponse;
 import cn.com.jerry.mvplib.base.BasePresenter;

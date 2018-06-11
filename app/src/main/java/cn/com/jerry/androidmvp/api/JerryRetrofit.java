@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import cn.com.jerry.androidmvp.C;
-import cn.com.jerry.androidmvp.model.DeviceVO;
-import cn.com.jerry.androidmvp.model.UserVO;
+import cn.com.jerry.androidmvp.ui.home.domain.DeviceVO;
+import cn.com.jerry.androidmvp.ui.login.domain.UserVO;
 import cn.com.jerry.mvplib.api.BaseResponse;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
